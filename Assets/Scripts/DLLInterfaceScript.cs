@@ -20,6 +20,8 @@ public class DLLInterfaceScript : MonoBehaviour
     static readonly string numPausesPrefix = "Num PauseResume: ";
     static readonly string lastPausePrefix = "Last Pause: ";
 
+    private bool isPaused;
+
 
     [DllImport("NexplayerDll.dll")]
     private static extern void OnPlayPause(int current_playback_time);
@@ -31,6 +33,7 @@ public class DLLInterfaceScript : MonoBehaviour
 
     void Start()
     {
+        isPaused = false;
         //reset the DLL
         OnPlayPause(0);
         //add listener to PlayPause Button
@@ -50,14 +53,23 @@ public class DLLInterfaceScript : MonoBehaviour
     //is called on PlayPause button click
     void CallOnPlayPause()
     {
-        currentTime = playTimeObject.GetComponent<Text>();
-        Debug.Log("currentTime: " + currentTime + " type: " + currentTime.GetType());
-        Debug.Log("currentTimeText: " + currentTime.text + " type: " + currentTime.text.GetType());
+        if (!isPaused)//playing -> paused
+        {
+            currentTime = playTimeObject.GetComponent<Text>();
+            Debug.Log("currentTime: " + currentTime + " type: " + currentTime.GetType());
+            Debug.Log("currentTimeText: " + currentTime.text + " type: " + currentTime.text.GetType());
 
-        //convert to int 
-        ConvertTimeToInt();
-        //call dll func to update num clicks and last pause time
-        OnPlayPause(currentTimeInt);
+            //convert to int 
+            ConvertTimeToInt();
+            //call dll func to update num clicks and last pause time
+            OnPlayPause(currentTimeInt);
+            isPaused = true;
+        }
+        else
+        {
+            isPaused = false;
+        }
+        
     }
 
 
