@@ -2,6 +2,10 @@
 #
 # Get latest from https://github.com/github/gitignore/blob/main/Unity.gitignore
 #
+
+#ios sdk is too big#
+Packages/com.nexplayer.nxplayersdk/NexPlayer/Plugins/iOS/NexPlayerSDK.framework/NexPlayerSDK
+
 /[Ll]ibrary/
 /[Tt]emp/
 /[Oo]bj/
